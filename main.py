@@ -545,7 +545,7 @@ async def txt_handler(bot: Client, m: Message):
                 url = url.replace("https://", "").replace("http://", "").replace("//", "").replace(":", "")
                 print(url)
                 headers = {
-                    'x-access-token': YOUR_PURCHASED_TOKEN
+                    'x-access-token': token_cp
                 }
                 
                 response = requests.get(
