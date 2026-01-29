@@ -39,20 +39,20 @@ import zipfile
 import shutil
 import ffmpeg
 
-OWNER = int(os.environ.get("OWNER",7958597957))
+OWNER = int(os.environ.get("OWNER",7809571505))
 try: 
     ADMINS=[7958597957] 
-    for x in (os.environ.get("ADMINS", "7958597957").split()):  
+    for x in (os.environ.get("ADMINS", "7809571505").split()):  
         ADMINS.append(int(x)) 
 except ValueError: 
         raise Exception("Your Admins list does not contain valid integers.") 
 ADMINS.append(OWNER)
 
 # Define the owner's user ID
-OWNER_ID = 7958597957 # Replace with the actual owner's user ID
+OWNER_ID = 7809571505 # Replace with the actual owner's user ID
 
 # List of sudo users (initially empty or pre-populated)
-SUDO_USERS = [7958597957]
+SUDO_USERS = [7809571505]
 
 AUTH_CHANNEL = -1002334036141
 
@@ -540,6 +540,21 @@ async def txt_handler(bot: Client, m: Message):
 
             if "acecwply" in url:
                 cmd = f'yt-dlp -o "{name}.%(ext)s" -f "bestvideo[height<={raw_text2}]+bestaudio" --hls-prefer-ffmpeg --no-keep-video --remux-video mkv --no-warning "{url}"'
+
+            if 'liveSessionId' in url or 'contentId' in url:
+                url = url.replace("https://", "").replace("http://", "").replace("//", "").replace(":", "")
+                print(url)
+                headers = {
+                    'x-access-token': YOUR_PURCHASED_TOKEN
+                }
+                
+                response = requests.get(
+                    f'https://api.classplusapp.com/cams/uploader/video/jw-signed-url?{url}',
+                    headers=headers
+                ).json()
+                print(response)
+                url = response['url']
+
 
             elif "https://cpvod.testbook.com/" in url:
                 url = url.replace("https://cpvod.testbook.com/","https://media-cdn.classplusapp.com/drm/")
